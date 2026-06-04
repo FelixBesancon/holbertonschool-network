@@ -18,5 +18,5 @@ flowchart TD
     LB -->|"Forwarded to server"| WS
     WS -->|"Dynamic request"| AS
     AS -->|"DB query"| DB
-    ```
+```
     
