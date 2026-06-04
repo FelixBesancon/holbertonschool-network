@@ -111,17 +111,31 @@ Google uses a variety of proprietary storage systems (like **Bigtable** and **Sp
 
 ## Putting It All Together
 
+```mermaid
+flowchart TD
+    Browser(["① Browser\nhttps://www.google.com"])
+    DNS["② DNS Resolution\nwww.google.com → 142.250.74.68"]
+    TCP["③ TCP/IP Connection\n3-way handshake on port 443"]
+    FW["④ Firewall\nAllows traffic on TCP/443"]
+    SSL["⑤ HTTPS / SSL-TLS\nCertificate verified, traffic encrypted"]
+    LB["⑥ Load Balancer\nDistributes via Round Robin"]
+    WS["⑦ Web Server\nNginx — serves static content"]
+    AS["⑧ Application Server\nGenerates the web page"]
+    DB[("⑨ Database\nReturns requested data")]
+ 
+    Browser -->|"DNS query"| DNS
+    DNS -->|"IP address returned"| TCP
+    TCP -->|"TCP established"| FW
+    FW -->|"Request authorized"| SSL
+    SSL -->|"Encrypted request"| LB
+    LB -->|"Forwarded to server"| WS
+    WS -->|"Dynamic request"| AS
+    AS -->|"DB query"| DB
 ```
-Browser → DNS Resolution → TCP Handshake (port 443)
-       → Firewall → TLS/SSL Handshake
-       → Load Balancer → Web Server
-       → Application Server → Database
-       → Response travels back the same path
-       → Browser renders the page
-```
+
 
 Every time you press Enter, this entire chain — DNS, TCP, TLS, firewall, load balancing, web server, app server, database — completes in **under a second**. That's the magic of modern web infrastructure.
 
 ---
 
-*Written as part of the Holberton School SysAdmin/DevOps curriculum.*
+> Read this article on [Medium](https://medium.com/@f.besancon/what-happens-when-you-type-https-www-google-com-and-press-enter-2b1331830b32).
